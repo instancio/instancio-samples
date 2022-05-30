@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0.0'
+sourceCompatibility = '8'
+
+def instancioVersion = '1.3.5'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.apache.commons:commons-lang3:3.12.0"
+    testImplementation "org.assertj:assertj-core:3.22.0"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.8.2"
+
+    // Instancio library
+    testImplementation "org.instancio:instancio-junit:$instancioVersion"
+    testAnnotationProcessor "org.instancio:instancio-processor:$instancioVersion"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
