@@ -6,7 +6,7 @@ group = 'org.example'
 version = '1.0.0'
 sourceCompatibility = '8'
 
-def instancioVersion = '1.4.1'
+def instancioVersion = '1.5.2'
 
 repositories {
     mavenLocal()
