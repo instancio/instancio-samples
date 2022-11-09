@@ -45,9 +45,9 @@ class ApplicantToAvroMapperTest {
         assertThat(result).isPresent();
 
         final ApplicantAvro applicantAvro = result.get();
-        assertThat(applicantAvro.getFirstName()).isEqualTo(applicantAvro.getFirstName());
-        assertThat(applicantAvro.getMiddleName()).isEqualTo(applicantAvro.getMiddleName());
-        assertThat(applicantAvro.getLastName()).isEqualTo(applicantAvro.getLastName());
+        assertThat(applicantAvro.getFirstName()).isEqualTo(applicant.getFirstName());
+        assertThat(applicantAvro.getMiddleName()).isEqualTo(applicant.getMiddleName());
+        assertThat(applicantAvro.getLastName()).isEqualTo(applicant.getLastName());
         assertThat(applicantAvro.getAddress()).isNotNull();
 
         final Address address = applicant.getAddress();
