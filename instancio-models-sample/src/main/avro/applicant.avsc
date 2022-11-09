@@ -1,0 +1,52 @@
+{
+  "type": "record",
+  "namespace": "org.example.avro",
+  "name": "ApplicantAvro",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "string"
+    },
+    {
+      "name": "middleName",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "lastName",
+      "type": "string"
+    },
+    {
+      "name": "address",
+      "type": {
+        "type": "record",
+        "name": "AddressAvro",
+        "fields": [
+          {
+            "name": "street",
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "name": "country",
+            "type": "string"
+          },
+          {
+            "name": "postalCode",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          }
+        ]
+      }
+    }
+  ]
+}
