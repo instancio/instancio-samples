@@ -37,7 +37,8 @@ public class ApplicantToAvroMapper {
 
             return Optional.of(applicantAvro);
         } catch (AvroRuntimeException ex) { // log
-            System.out.printf("Error converting person id=%d to Avro. Cause: '%s'%n", applicant.getId(), ex.getMessage());
+            System.out.printf("Error converting applicant id=%d to Avro. Cause: '%s'%n",
+                    applicant.getId(), ex.getMessage());
             return Optional.empty();
         }
     }

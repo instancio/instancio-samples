@@ -8,15 +8,12 @@ import org.example.dto.Grade;
 import org.instancio.Instancio;
 import org.instancio.Model;
 import org.instancio.Selector;
-import org.instancio.SelectorGroup;
-import org.instancio.TargetSelector;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,9 +26,11 @@ class ApplicantToAvroMapperTest {
 
     private final ApplicantToAvroMapper mapper = new ApplicantToAvroMapper();
 
-    // Create a valid applicant model.
     private static Model<Applicant> createValidApplicantModel() {
         return Instancio.of(Applicant.class)
+                .withNullable(all(
+                        field("middleName"),
+                        field(Address.class, "postalCode")))
                 .generate(field("age"), gen -> gen.ints().range(18, 25))
                 .generate(all(Grade.class), gen -> gen.oneOf(Grade.A, Grade.B))
                 .toModel();
@@ -83,46 +82,28 @@ class ApplicantToAvroMapperTest {
     }
 
     @Test
-    @DisplayName("Should return a non-empty result if optional fields are null")
-    void shouldReturnNonEmptyResultIfOptionalDataIsMissing() {
-        // Set all of these to null
-        SelectorGroup optionalSelectors = all(
-                field(Applicant.class, "middleName"),
-                field(Address.class, "postalCode"));
-
-        Optional<ApplicantAvro> result = convertWithSelectedTargetSetToNull(optionalSelectors);
-        assertThat(result)
-                .as("Expected %s to be optional", optionalSelectors)
-                .isPresent();
-    }
-
-    @Test
     @DisplayName("Should return an empty Optional if any of the required fields is null")
     void shouldReturnEmptyResultIfRequiredDataIsMissing() {
-        List<Selector> requiredData = Arrays.asList(
+        Selector[] requiredFields = {
                 field(Applicant.class, "firstName"),
                 field(Applicant.class, "lastName"),
-                field(Applicant.class, "address"),
                 field(Address.class, "street"),
                 field(Address.class, "city"),
-                field(Address.class, "country"));
+                field(Address.class, "country")
+        };
 
         // Set each of these to null individually, so that only one required field is null at a time
-        requiredData.forEach(selector -> {
-            Optional<ApplicantAvro> result = convertWithSelectedTargetSetToNull(selector);
-            assertThat(result)
-                    .as("Expected %s to be required", selector)
-                    .isNotPresent();
+        Arrays.stream(requiredFields).forEach(selector -> {
+            // Given
+            Applicant applicant = Instancio.of(createValidApplicantModel())
+                    .set(selector, null)
+                    .create();
+
+            // When
+            Optional<ApplicantAvro> result = mapper.toAvro(applicant);
+
+            // Then
+            assertThat(result).as("Expected %s to be required", selector).isNotPresent();
         });
-    }
-
-    private Optional<ApplicantAvro> convertWithSelectedTargetSetToNull(TargetSelector selector) {
-        Model<Applicant> personDTOModel = createValidApplicantModel();
-
-        Applicant applicant = Instancio.of(personDTOModel)
-                .set(selector, null)
-                .create();
-
-        return mapper.toAvro(applicant);
     }
 }
