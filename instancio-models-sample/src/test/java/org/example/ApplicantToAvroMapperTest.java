@@ -38,7 +38,7 @@ class ApplicantToAvroMapperTest {
 
     @Test
     @DisplayName("Valid applicant should be successfully converted to Avro")
-    void verifyAvroMapping() {
+    void verifyValidApplicantAvro() {
         final Applicant applicant = Instancio.create(createValidApplicantModel());
         final Optional<ApplicantAvro> result = mapper.toAvro(applicant);
         assertThat(result).isPresent();
