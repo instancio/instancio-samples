@@ -7,16 +7,12 @@ import org.example.person.Phone;
 import org.example.person.PhoneWithExtension;
 import org.instancio.Instancio;
 import org.instancio.Result;
-import org.instancio.junit.InstancioSource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.instancio.Select.all;
@@ -143,23 +139,4 @@ class Instancio1BasicsTest {
 
         assertThat(results).containsNull();
     }
-
-    // TODO collection test
-    @Test
-    @DisplayName("Generate a list Person filled with random data")
-    void personList() {
-        List<Person> personList = Instancio.ofList(Person.class).size(3).create();
-        assertThat(personList).hasSize(3);
-    }
-
-
-    // TODO extension test
-    @ParameterizedTest
-    @InstancioSource({UUID.class, Address.class})
-    @DisplayName("Generate UUID and Address via JUnit params")
-    void personParams(final UUID uuid, final Address address) {
-        assertThat(uuid).isNotNull();
-        assertThat(address).isNotNull();
-    }
-
 }
