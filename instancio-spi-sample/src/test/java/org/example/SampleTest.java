@@ -43,7 +43,7 @@ class SampleTest {
     private static final String COUNTRY_CODE_REGEX = "\\+\\d\\d";
 
     /**
-     * {@code PopulateAction.NULLS} tells Instancio to populate null fields with random data.
+     * {@code AfterGenerate.POPULATE_NULLS} tells Instancio to populate null fields with random data.
      */
     @WithSettings
     private static final Settings settings = Settings.create()
