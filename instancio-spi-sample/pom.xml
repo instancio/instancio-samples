@@ -2,32 +2,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>book-mapper-sample</artifactId>
-    <groupId>com.book.mapper</groupId>
+    <artifactId>instancio-maven-sample</artifactId>
+    <groupId>org.example</groupId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>Book Mapper Sample</name>
+    <name>Instancio SPI Sample</name>
+    <description>A sample showing how to implement a custom GeneratorProvider.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <commons.lang3.version>3.12.0</commons.lang3.version>
-        <instancio.version>2.0.0</instancio.version>
-        <junit.version>5.8.2</junit.version>
+        <java.version>8</java.version>
         <assertj.version>3.23.1</assertj.version>
+        <jackson.version>2.14.1</jackson.version>
+        <datafaker.version>1.7.0</datafaker.version>
+        <instancio.version>2.0.0</instancio.version>
+        <junit.version>5.9.0</junit.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons.lang3.version}</version>
-        </dependency>
-
         <!-- Test dependencies -->
         <dependency>
             <groupId>org.instancio</groupId>
             <artifactId>instancio-junit</artifactId>
             <version>${instancio.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -41,6 +44,18 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Using Jackson only to make a pretty toString() -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -50,8 +65,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>

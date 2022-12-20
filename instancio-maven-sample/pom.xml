@@ -11,13 +11,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
+        <instancio.version>2.0.0</instancio.version>
+        <assertj.version>3.23.1</assertj.version>
+        <junit.version>5.9.0</junit.version>
         <commons.lang3.version>3.12.0</commons.lang3.version>
-        <instancio.version>1.5.2</instancio.version>
-        <junit.version>5.8.2</junit.version>
-        <assertj.version>3.22.0</assertj.version>
     </properties>
 
     <dependencies>
+        <!-- only used for reflection toString() -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -53,13 +54,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.instancio</groupId>
-                            <artifactId>instancio-processor</artifactId>
-                            <version>${instancio.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>

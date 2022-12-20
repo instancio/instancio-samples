@@ -1,16 +1,11 @@
-# Instancio Sample Maven Project
+# Instancio - Sample Maven Project
 
-Includes examples of `InstancioExtention` for JUnit 5 and metamodels
-generated using `@InstancioMetamodel` annotation.
+The samples are organised by feature across the following files:
 
-```
-cd instancio-maven-sample
-mvn package
-```
-
-Note: if your IDE is unable to find the metamodel classes, you might need to mark
-`target/generated-test-sources/test-annotations/` as test sources. For example,
-in IntelliJ:
-
-<img src="https://i.imgur.com/5Xg0TBB.png" alt="IntelliJ Project Structure"/>
-
+- `Instancio1BasicsTest` - basic API usage on how to create and customise objects
+- `Instancio2GenericsTest` - creating generic objects using `TypeToken`
+- `Instancio3SelectorsTest` - overview of different types of selectors
+- `Instancio4CollectionsTest` - APIs for generating collections and streams
+- `Instancio5ModelsTest` - creating object templates using `Model`s
+- `Instancio6CustomGeneratorTest` - example of a custom generator
+- `Instancio7JUnitExtensionTest` - example of `InstancioExtension` for JUnit 5
