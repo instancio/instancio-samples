@@ -19,7 +19,7 @@ import static org.instancio.Select.field;
 class Instancio5ModelsTest {
 
     // A model is a template for creating objects.
-    // Define a model and create objects from it base on the template.
+    // Define a model and create objects from it based on the template.
     // Objects created from Models can be customised further or even turned into other models.
     private static Model<Person> simpsonsModel() {
         return Instancio.of(Person.class)

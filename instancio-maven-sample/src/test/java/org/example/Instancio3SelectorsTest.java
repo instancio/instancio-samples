@@ -52,7 +52,7 @@ class Instancio3SelectorsTest {
     }
 
     @Test
-    @DisplayName("Selecting a field of any class")
+    @DisplayName("Selecting a field of the specified class")
     void selectFieldInAnyClass() {
         Person person = Instancio.of(Person.class)
                 .set(field(Address.class, "city"), "Springfield")

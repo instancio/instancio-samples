@@ -44,7 +44,7 @@ class Instancio4CollectionsTest {
     }
 
     @Test
-    @DisplayName("All collection, can be returned as 'Result' object which also contains the seed")
+    @DisplayName("collections can be returned as a 'Result' object containing the result and the seed")
     void asResult() {
         Result<List<Person>> result = Instancio.ofList(Person.class).size(3).asResult();
         List<Person> list = result.get();
@@ -83,6 +83,9 @@ class Instancio4CollectionsTest {
         assertThat(persons).allSatisfy(person -> {
             assertThat(person.getName()).isEqualTo("Homer Simpson");
             assertThat(person.getAge()).isBetween(40, 50);
+            assertThat(person.getAddress().getPhoneNumbers()).allSatisfy(phone -> {
+                assertThat(phone).isInstanceOf(PhoneWithExtension.class);
+            });
         });
     }
 
@@ -149,8 +152,8 @@ class Instancio4CollectionsTest {
                         .withKeys("foo", "bar"))
                 .create();
 
-        assertThat(map).isInstanceOf(TreeMap.class).
-                hasSize(5)
+        assertThat(map).isInstanceOf(TreeMap.class)
+                .hasSize(5)
                 .containsKeys("foo", "bar");
     }
 

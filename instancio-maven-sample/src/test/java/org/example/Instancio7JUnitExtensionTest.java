@@ -14,12 +14,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,35 +63,44 @@ class Instancio7JUnitExtensionTest {
 
     @ParameterizedTest
     @InstancioSource({UUID.class, Address.class})
+    @DisplayName("Using Instancio to provide any number of parameterized test arguments")
     void parameterizedExample(UUID uuid, Address address) {
         assertThat(uuid).isNotNull();
         assertThat(address).isNotNull();
     }
 
+    /**
+     * When {@code @Seed} annotation is not present, Instancio generates a random seed.
+     * <p>
+     * Placing the annotation allows using the specific seed
+     * (for example for reproducing test failures).
+     */
     @Nested
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class SeedAnnotationTest {
-        private final Set<UUID> results = new HashSet<>();
 
         @RepeatedTest(5)
         @Seed(12345)
+        @DisplayName("Will generate same data each time using given seed value")
         void withSeedAnnotation() {
             UUID uuid = Instancio.create(UUID.class);
             System.out.println("Generated UUID: " + uuid);
 
-            results.add(uuid);
-            assertThat(results)
-                    .as("Same value generated each time using given seed")
-                    .hasSize(1);
+            // Relying on hardcoded values is highly discouraged!
+            // Just for demonstration:
+            String expectedUuid = "2c1be28d-59f5-38f8-9c73-b096ecb08925";
+            assertThat(uuid).hasToString(expectedUuid);
         }
 
         @Test
         @Seed(12345)
+        @DisplayName("The Seed annotation can be overridden using withSeed() method")
         void overrideSeedAnnotation() {
-            Result<UUID> result1 = Instancio.of(UUID.class).asResult(); // uses seed from annotation
+            // Uses seed from the annotation
+            Result<UUID> result1 = Instancio.of(UUID.class).asResult();
 
+            // Used seed provided via withSeed() method
             Result<UUID> result2 = Instancio.of(UUID.class)
-                    .withSeed(234) // overrides seed from annotation
+                    .withSeed(234)
                     .asResult();
 
             assertThat(result1.get()).isNotEqualTo(result2.get());
