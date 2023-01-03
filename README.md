@@ -1,11 +1,5 @@
 # Instancio Sample Projects
 
-
-### [`instancio-maven-sample`](instancio-maven-sample)
-
-The most comprehensive sample and **the best place to start**.
-It provides an overview of most of the features.
-
 ### [`instancio-models-sample`](instancio-models-sample)
 
 Sample project used for the article: [Creating object templates using Models](https://www.instancio.org/articles/creating-object-templates-using-models/)
