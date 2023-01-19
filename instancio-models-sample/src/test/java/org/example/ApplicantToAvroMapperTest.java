@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.avro.AddressAvro;
 import org.example.avro.ApplicantAvro;
 import org.example.dto.Address;
 import org.example.dto.Applicant;
@@ -17,6 +16,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatObject;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.instancio.Select.all;
 import static org.instancio.Select.field;
@@ -51,17 +51,9 @@ class ApplicantToAvroMapperTest {
         assertThat(result).isPresent();
 
         final ApplicantAvro applicantAvro = result.get();
-        assertThat(applicantAvro.getFirstName()).isEqualTo(applicant.getFirstName());
-        assertThat(applicantAvro.getMiddleName()).isEqualTo(applicant.getMiddleName());
-        assertThat(applicantAvro.getLastName()).isEqualTo(applicant.getLastName());
-        assertThat(applicantAvro.getAddress()).isNotNull();
-
-        final Address address = applicant.getAddress();
-        final AddressAvro addressAvro = applicantAvro.getAddress();
-        assertThat(addressAvro.getStreet()).isEqualTo(address.getStreet());
-        assertThat(addressAvro.getCity()).isEqualTo(address.getCity());
-        assertThat(addressAvro.getCountry()).isEqualTo(address.getCountry());
-        assertThat(addressAvro.getPostalCode()).isEqualTo(address.getPostalCode());
+        assertThatObject(applicantAvro)
+                .usingRecursiveComparison()
+                .isEqualTo(applicant);
     }
 
     @Test
