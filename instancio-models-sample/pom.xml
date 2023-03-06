@@ -13,7 +13,7 @@
         <java.version>8</java.version>
         <avro.version>1.11.1</avro.version>
         <commons.lang3.version>3.12.0</commons.lang3.version>
-        <instancio.version>2.9.0</instancio.version>
+        <instancio.version>2.11.0</instancio.version>
         <junit.version>5.9.2</junit.version>
         <assertj.version>3.24.2</assertj.version>
     </properties>
