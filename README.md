@@ -8,3 +8,8 @@ Sample project used for the article: [Creating object templates using Models](ht
 
 A small sample illustrating reduction in code by eliminating manual data setup.
 
+### [`type-resolver-sample`](type-resolver-sample)
+
+A custom `TypeResolver` that scans the classpath to find implementation classes for interfaces.
+This eliminates the need for specifying `subtype()` manually.
+Classpath scanning is implemented using [ClassGraph](https://github.com/classgraph/classgraph).
