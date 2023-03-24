@@ -13,13 +13,14 @@
         <java.version>8</java.version>
         <assertj.version>3.23.1</assertj.version>
         <classgraph.version>4.8.157</classgraph.version>
-        <instancio.version>2.11.0</instancio.version>
+        <instancio.version>2.12.0</instancio.version>
         <junit.version>5.9.0</junit.version>
     </properties>
 
     <modules>
         <module>book-mapper-sample</module>
         <module>instancio-models-sample</module>
+        <module>generator-provider-sample</module>
         <module>type-resolver-sample</module>
     </modules>
 
