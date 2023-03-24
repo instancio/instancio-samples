@@ -13,7 +13,6 @@ A small sample illustrating reduction in code by eliminating manual data setup.
 A `GeneratorProvider` that automatically maps generators to classes/fields.
 This removes the need to specify custom generators manually via the API.
 
-Classpath scanning is implemented using [ClassGraph](https://github.com/classgraph/classgraph).
 ### [`type-resolver-sample`](type-resolver-sample)
 
 A custom `TypeResolver` that scans the classpath to find implementation classes for interfaces.
