@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
         <assertj.version>3.23.1</assertj.version>
-        <instancio.version>2.12.0</instancio.version>
+        <instancio.version>2.13.0</instancio.version>
         <junit.version>5.9.0</junit.version>
     </properties>
 
