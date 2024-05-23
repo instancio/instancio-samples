@@ -6,7 +6,9 @@ import org.example.dto.Applicant;
 import org.example.dto.Grade;
 import org.instancio.Instancio;
 import org.instancio.Model;
+import org.instancio.Select;
 import org.instancio.Selector;
+import org.instancio.TargetSelector;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatObject;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.instancio.Select.all;
 import static org.instancio.Select.field;
 
@@ -34,11 +35,13 @@ class ApplicantToAvroMapperTest {
      * by the class under test.
      */
     private static Model<Applicant> createValidApplicantModel() {
+        TargetSelector nullableFields = Select.all(
+                field(Applicant::getMiddleName),
+                field(Address::getPostalCode));
+
         return Instancio.of(Applicant.class)
-                .withNullable(all(
-                        field("middleName"),
-                        field(Address.class, "postalCode")))
-                .generate(field("age"), gen -> gen.ints().range(18, 25))
+                .withNullable(nullableFields)
+                .generate(field(Applicant::getAge), gen -> gen.ints().range(18, 25))
                 .generate(all(Grade.class), gen -> gen.oneOf(Grade.A, Grade.B))
                 .toModel();
     }
@@ -46,12 +49,14 @@ class ApplicantToAvroMapperTest {
     @Test
     @DisplayName("Valid applicant should be successfully converted to Avro")
     void verifyValidApplicantAvro() {
+        // Given
         final Applicant applicant = Instancio.create(createValidApplicantModel());
-        final Optional<ApplicantAvro> result = mapper.toAvro(applicant);
-        assertThat(result).isPresent();
 
-        final ApplicantAvro applicantAvro = result.get();
-        assertThatObject(applicantAvro)
+        // When
+        final Optional<ApplicantAvro> result = mapper.toAvro(applicant);
+
+        then(result).isPresent()
+                .get()
                 .usingRecursiveComparison()
                 .isEqualTo(applicant);
     }
@@ -60,7 +65,7 @@ class ApplicantToAvroMapperTest {
     @DisplayName("Validation should fail if applicant is under 18 or over 25")
     void applicantAgeValidation() {
         Applicant applicant = Instancio.of(createValidApplicantModel())
-                .generate(field("age"), gen -> gen.oneOf(17, 26))
+                .generate(field(Applicant::getAge), gen -> gen.oneOf(17, 26))
                 .create();
 
         assertThatThrownBy(() -> mapper.toAvro(applicant))
@@ -84,11 +89,11 @@ class ApplicantToAvroMapperTest {
     @DisplayName("Should return an empty Optional if any of the required fields is null")
     void shouldReturnEmptyResultIfRequiredDataIsMissing() {
         Selector[] requiredFields = {
-                field(Applicant.class, "firstName"),
-                field(Applicant.class, "lastName"),
-                field(Address.class, "street"),
-                field(Address.class, "city"),
-                field(Address.class, "country")
+                field(Applicant::getFirstName),
+                field(Applicant::getLastName),
+                field(Address::getStreet),
+                field(Address::getCity),
+                field(Address::getCountry)
         };
 
         // Set each of these to null individually, so that only one required field is null at a time
@@ -101,8 +106,9 @@ class ApplicantToAvroMapperTest {
             // When
             Optional<ApplicantAvro> result = mapper.toAvro(applicant);
 
-            // Then
-            assertThat(result).as("Expected %s to be required", selector).isNotPresent();
+            then(result)
+                    .as("Expected %s to be required", selector)
+                    .isNotPresent();
         });
     }
 }
