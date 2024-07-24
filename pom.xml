@@ -13,7 +13,7 @@
         <java.version>8</java.version>
         <assertj.version>3.23.1</assertj.version>
         <classgraph.version>4.8.157</classgraph.version>
-        <instancio.version>4.8.0</instancio.version>
+        <instancio.version>5.0.0</instancio.version>
         <junit.version>5.9.0</junit.version>
     </properties>
 
