@@ -90,6 +90,7 @@ class ApplicantToAvroMapperTest {
         Selector[] requiredFields = {
                 field(Applicant::getFirstName),
                 field(Applicant::getLastName),
+                field(Applicant::getAddress),
                 field(Address::getStreet),
                 field(Address::getCity),
                 field(Address::getCountry)
