@@ -57,6 +57,7 @@ class ApplicantToAvroMapperTest {
 
         then(result)
                 .usingRecursiveComparison()
+                .withEnumStringComparison()
                 .isEqualTo(applicant);
     }
 

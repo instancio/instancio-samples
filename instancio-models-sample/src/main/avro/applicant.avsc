@@ -20,6 +20,14 @@
       "type": "string"
     },
     {
+      "name": "age",
+      "type": "int"
+    },
+    {
+      "name": "grade",
+      "type": "string"
+    },
+    {
       "name": "address",
       "type": {
         "type": "record",

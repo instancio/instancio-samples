@@ -28,6 +28,8 @@ public class ApplicantToAvroMapper {
                 .setFirstName(applicant.getFirstName())
                 .setMiddleName(applicant.getMiddleName())
                 .setLastName(applicant.getLastName())
+                .setAge(applicant.getAge())
+                .setGrade(applicant.getGrade().toString())
                 .setAddress(addressToAvro(applicant.getAddress()))
                 .build();
     }
