@@ -18,8 +18,10 @@ package org.example.typeresolver;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
+import org.instancio.Node;
 import org.instancio.spi.InstancioServiceProvider;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,8 +57,8 @@ public class SampleProvider implements InstancioServiceProvider {
         }
 
         @Override
-        public Class<?> getSubtype(final Class<?> type) {
-            return subtypes.get(type);
+        public Type getSubtype(final Node node) {
+            return subtypes.get(node.getTargetClass());
         }
 
         private void mapInterfaceToImplementation(final ClassInfo interfaceClassInfo) {
